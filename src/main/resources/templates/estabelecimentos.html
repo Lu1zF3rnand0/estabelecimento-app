@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="br" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>App Estabelecimento</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+</head>
+<body>
+
+<div th:insert="menu :: navbar"></div>
+<div class="container mt-3">
+
+    <h2 align="center">Lista de Estabelecimentos</h2>
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>CNPJ</th>
+            <th>Nome</th>
+            <th>Endereco</th>
+            <th>EdTech</th>
+            <th>Funcionários</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        <tr th:each="e : ${lista}">
+            <td th:text="${e.cnpj}"/>
+            <td th:text="${e.nome}"/>
+            <td th:text="${e.endereco}"/>
+            <!--    edTech = true        -->
+            <td th:if="${e.edTech}">Sim</td>
+            <!--    edTech = false        -->
+            <td th:if="${not e.edTech}">Nao</td>
+            <td><a th:href="@{/funcionarios/{id}(id=${e.id})}">Link Para Funcionários</a></td>
+        </tr>
+        </tbody>
+    </table>
+
+</div>
+</body>
+</html>
