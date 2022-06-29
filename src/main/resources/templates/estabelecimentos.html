@@ -19,7 +19,8 @@
             <th>Nome</th>
             <th>Endereco</th>
             <th>EdTech</th>
-            <th>Funcionários</th>
+            <th></th>
+            <th></th>
         </tr>
         </thead>
         <tbody>
@@ -32,7 +33,8 @@
             <td th:if="${e.edTech}">Sim</td>
             <!--    edTech = false        -->
             <td th:if="${not e.edTech}">Nao</td>
-            <td><a th:href="@{/funcionarios/{id}(id=${e.id})}">Link Para Funcionários</a></td>
+            <td><a th:href="@{/funcionarios/{id}(id=${e.id})}">Funcionários</a></td>
+            <td><a th:href="@{/usuario/{id}(id=${e.id})}">Excluir</a> </td>
         </tr>
         </tbody>
     </table>

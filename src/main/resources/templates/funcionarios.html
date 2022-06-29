@@ -10,7 +10,7 @@
 <div th:insert="menu :: navbar"></div>
 <div class="container mt-3">
 
-    <h2 align="center">Lista de Funcionarios</h2>
+    <h2 align="center">Lista de Funcionarios [(${estabelecimento})]</h2>
 
     <table class="table table-striped">
         <thead>
@@ -29,7 +29,7 @@
             <td th:text="${f.nome}"/>
             <td th:text="${f.email}"/>
             <td th:text="${f.telefone}"/>
-            <td> Excluir </td>
+            <td><a th:href="@{/usuario/{id}(id=${f.id})}">Excluir</a> </td>
         </tr>
         </tbody>
     </table>
