@@ -1,13 +1,14 @@
 package br.edu.infnet.estabelecimentoapp.controller;
 
 import br.edu.infnet.estabelecimentoapp.model.Estabelecimento;
+import br.edu.infnet.estabelecimentoapp.model.Funcionario;
 import br.edu.infnet.estabelecimentoapp.service.EstabelecimentoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.Optional;
 
@@ -20,7 +21,7 @@ public class EstabelecimentoController {
     @GetMapping(value = "/estabelecimentos")
     public String telaListaEstabelecimentos(Model model){
         model.addAttribute("lista", estabelecimentoService.listarEstabelecimentos());
-        return "estabelecimentos";
+        return "estabelecimento/estabelecimentos";
     }
 
     @GetMapping(value = "/funcionarios/{id}")
@@ -31,13 +32,63 @@ public class EstabelecimentoController {
                 .findFirst();
 
         model.addAttribute("lista", estabelecimentoService.listarFuncionariosPorIdEstabelecimento(id));
-        estabelecimento.ifPresent(value -> model.addAttribute("estabelecimento", value.getNome()));
-        return "funcionarios";
+        estabelecimento.ifPresent(value -> model.addAttribute("estabelecimento", value));
+        return "funcionario/funcionarios";
     }
 
-    @GetMapping(value = "usuario/{id}")
-    public String excluirUsuario(@PathVariable Integer id){
-        estabelecimentoService.excluir(id);
+    @GetMapping(value = "/funcionario/{idFuncionario}/{idEstabelecimento}")
+    public String excluirFuncionario(@PathVariable Integer idFuncionario, @PathVariable Integer idEstabelecimento){
+        estabelecimentoService.excluir(idFuncionario);
+        return "redirect:/funcionarios/" + idEstabelecimento;
+    }
+
+    @GetMapping(value = "/estabelecimento/excluir/{idEstabelecimento}")
+    public String excluirEstabelecimento(@PathVariable Integer idEstabelecimento){
+        estabelecimentoService.excluir(idEstabelecimento);
+        return "redirect:/estabelecimentos";
+    }
+
+    @GetMapping(value = "/funcionario/incluir/{idEstabelecimento}")
+    public String telaCadastroFuncionario(Model model, @PathVariable Integer idEstabelecimento){
+        Funcionario funcionario = new Funcionario();
+
+        Estabelecimento estabelecimento = estabelecimentoService.listarEstabelecimentos()
+                .stream()
+                .filter(e -> e.getId().equals(idEstabelecimento))
+                .findFirst()
+                .orElse(null);
+
+        model.addAttribute("estabelecimento", estabelecimento);
+        model.addAttribute("funcionario", funcionario);
+        return "funcionario/cadastro";
+    }
+
+    @PostMapping(value = "/funcionario/incluir/{idEstabelecimento}")
+    public String incluiFuncionario(Model model, Funcionario funcionario, @PathVariable Integer idEstabelecimento){
+        Estabelecimento estabelecimento = estabelecimentoService.listarEstabelecimentos()
+                .stream()
+                .filter(e -> e.getId().equals(idEstabelecimento))
+                .findFirst()
+                .orElse(null);
+
+        funcionario.setEstabelecimento(estabelecimento);
+
+        estabelecimentoService.incluirFuncionario(funcionario);
+        model.addAttribute("lista", estabelecimentoService.listarEstabelecimentos());
+        return "redirect:/funcionarios/" + idEstabelecimento;
+    }
+
+
+    @GetMapping(value = "/estabelecimento")
+    public String telaCadastroEstabelecimento(Model model){
+        model.addAttribute("estabelecimento", new Estabelecimento());
+        return "estabelecimento/cadastro";
+    }
+
+
+    @PostMapping(value = "/estabelecimento/incluir")
+    public String incluiFuncionario(Estabelecimento estabelecimento){
+        estabelecimentoService.incluirEstabelecimento(estabelecimento);
         return "redirect:/estabelecimentos";
     }
 

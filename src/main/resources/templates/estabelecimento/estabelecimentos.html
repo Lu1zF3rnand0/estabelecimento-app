@@ -34,10 +34,12 @@
             <!--    edTech = false        -->
             <td th:if="${not e.edTech}">Nao</td>
             <td><a th:href="@{/funcionarios/{id}(id=${e.id})}">Funcionários</a></td>
-            <td><a th:href="@{/usuario/{id}(id=${e.id})}">Excluir</a> </td>
+            <td><a th:href="@{/estabelecimento/excluir/{id}(id=${e.id})}">Excluir</a> </td>
         </tr>
         </tbody>
     </table>
+
+    <a th:href="@{/estabelecimento}" class="btn btn-primary">Novo</a>
 
 </div>
 </body>
