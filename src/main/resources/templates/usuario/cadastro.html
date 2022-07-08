@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="br" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>App Estabelecimento</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+</head>
+<body>
+
+<div th:insert="menu :: navbar"></div>
+
+<div class="container mt-3">
+    <h2>Cadastramento de Usuários</h2>
+
+    <form th:action="@{/usuario/incluir}" th:object="${usuario}" method="post">
+
+<!--        <tr th:each="e : ${lista}">-->
+<!--            <td th:text="${e.cnpj}"/>-->
+<!--            <td th:text="${e.nome}"/>-->
+<!--            <td th:text="${e.endereco}"/>-->
+<!--            &lt;!&ndash;    edTech = true        &ndash;&gt;-->
+<!--            <td th:if="${e.edTech}">Sim</td>-->
+<!--            &lt;!&ndash;    edTech = false        &ndash;&gt;-->
+<!--            <td th:if="${not e.edTech}">Nao</td>-->
+<!--            <td><a th:href="@{/funcionarios/{id}(id=${e.id})}">Funcionários</a></td>-->
+<!--            <td><a th:href="@{/estabelecimento/excluir/{id}(id=${e.id})}">Excluir</a> </td>-->
+<!--        </tr>-->
+
+        <label>Acesso:
+            <select class="form-control" name="acesso" >
+<!--                <c:forEach var="r" items="${roles}">-->
+                    <option th:each="r : ${roles}" th:value="${r.id}" th:text="${r.nome}"></option>
+<!--                </c:forEach>-->
+            </select>
+        </label>
+
+        <div class="mb-3 mt-3">
+            <label>Nome:
+                <input type="text" class="form-control" placeholder="Nome" name="nome" th:field="*{nome}"/>
+            </label>
+        </div>
+
+        <div class="mb-3 mt-3">
+            <label>Email:
+                <input type="text" class="form-control" placeholder="email" name="email" th:field="*{email}"/>
+            </label>
+        </div>
+
+        <div class="mb-3 mt-3">
+            <label>Senha:
+                <input type="password" class="form-control" name="senha" th:field="*{senha}"/>
+            </label>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Cadastrar</button>
+    </form>
+</div>
+
+</body>
+</html>

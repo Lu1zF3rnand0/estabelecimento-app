@@ -78,13 +78,11 @@ public class EstabelecimentoController {
         return "redirect:/funcionarios/" + idEstabelecimento;
     }
 
-
     @GetMapping(value = "/estabelecimento")
     public String telaCadastroEstabelecimento(Model model){
         model.addAttribute("estabelecimento", new Estabelecimento());
         return "estabelecimento/cadastro";
     }
-
 
     @PostMapping(value = "/estabelecimento/incluir")
     public String incluiFuncionario(Estabelecimento estabelecimento){
